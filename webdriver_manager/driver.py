@@ -224,3 +224,15 @@ class OperaDriver(Driver):
         if token:
             return url + "?access_token={0}".format(token)
         return url
+
+
+class EdgeChromiumDriver(Driver):
+    def __init__(self, name, version, os_type, url, latest_release_url):
+        super(EdgeChromiumDriver, self).__init__(name, version, os_type, url,
+                                                 latest_release_url)
+
+    def get_latest_release_version(self):
+        # type: () -> str
+        resp = requests.get(self._latest_release_url)
+        validate_response(resp)
+        return resp.text.rstrip()
